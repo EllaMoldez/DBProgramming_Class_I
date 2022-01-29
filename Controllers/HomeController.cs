@@ -30,6 +30,7 @@ namespace DBProgramming_Class_I.Controllers
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
+                List<string> andSearchTerm = searchTerm.Split('+').ToList();
                 employees = employees
                     .Where(x =>
                         x.First_Name.IndexOf(searchTerm) != -1
@@ -38,6 +39,8 @@ namespace DBProgramming_Class_I.Controllers
 
             // creating list of departments
             List<Department> departments = context.Departments.OrderBy(x => x.Dept_Name).ToList();
+
+            //List<string> nameOfDepartments = context.Departments.Select(x => x.Dept.Name).ToList();
 
             CombinedLists combinedLists = new CombinedLists();
             combinedLists.Department = departments;
@@ -67,20 +70,31 @@ namespace DBProgramming_Class_I.Controllers
         {
             var context = new CompanyEntities();
             List<Employee> employees = context.Employees.ToList();
+            
 
             //LINQ
             var employeeToRemove = employees.FirstOrDefault(x => x.Emp_Id == empId);
 
+            //**.Where does not return just 1
+            //**.First give us the first encounter
+
             context.Employees.Remove(employeeToRemove);
-            //context.Employees.Remove(employeeToRemove.toString());
             context.SaveChanges();
 
+            //context.Employees.Remove(employeeToRemove.toString());
+
+            //**transaction is a block of database code that signals the database
+
             return Json(true, JsonRequestBehavior.AllowGet);
+            //return View("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult UpsertEmployee(Employee employee)
         {
+            //var context = new CompanyEntities();
+            //List<Employee> employees = context.Employees.ToList();
+
             Random rnd = new Random();
 
             if (string.IsNullOrWhiteSpace((employee.Emp_Id).ToString()))
