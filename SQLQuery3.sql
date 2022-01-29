@@ -1,0 +1,2 @@
+﻿TRUNCATE TABLE Sales;
+SELECT * FROM Sales;
