@@ -20,7 +20,11 @@
     #employees th {
         padding-top: 12px;
         padding-bottom: 12px;
-        text-align: left;
-        background-color: #04AA6D;
+        text-align: center;
+        background-color: #93C572;
         color: white;
+    }
+
+    .top-buffer {
+        margin-top: 20px;
     }

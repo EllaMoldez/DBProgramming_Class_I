@@ -2,12 +2,12 @@
 
 function deleteEmployee(empId) {
     $.ajax({
-        //type: 'GET',
-        type: 'PUT',
+        type: 'GET',
+        //type: 'PUT',
         url: '/Home/DeleteEmployee/?empId=' + empId,
         data: {},
         success: function (data) {
-            alert('Employee ID: ' + empId + ' was deleted.');
+            alert('Employee: ' + empId + ' was deleted.');
             window.location.reload();
         },
         contentType: "application/json; charset=utf-8",
@@ -20,12 +20,13 @@ function deleteEmployee(empId) {
 function updateEmployee(rowId) {
     var fName = $('#' + rowId).find('[name="fName"]').val();
     var lName = $('#' + rowId).find('[name="lName"]').val();
+    var newEmpDepoId = $('#' + rowId).find('[name="depoItem"]').val();
     var empId = rowId.replace('tr_', ''); // $('#' + rowId).find('[name="empId"]').val();
 
     var employee = {
         First_Name: fName,
         Last_Name: lName,
-        //Dept_Id: '',
+        Dept_Id: newEmpDepoId,
         Emp_Id: empId
     };
 
@@ -33,7 +34,7 @@ function updateEmployee(rowId) {
     $.ajax({
         //type: 'GET',
         type: 'POST',
-        url: '/Home/UpsertEmployee/',
+        url: '/Home/UpsertEmployee/' + empId,
         //data: {},
         data: JSON.stringify(employee),   //** stringify means converting a JS object or value to a JSON string
         success: function (data) {
@@ -72,7 +73,10 @@ function saveEmployee() {
 }
 
 function search() {
-    var searchTerm = document.getElementById('txtSearch').value;
-
+    var searchTerm = document.getElementById('txtSearchName').value;
     window.location.href = "/Home/Index/?searchTerm=" + encodeURIComponent(searchTerm);
+}
+
+function refresh() {
+    window.location.href = "/Home/Index";
 }

@@ -33,9 +33,20 @@ namespace DBProgramming_Class_I.Controllers
                 List<string> andSearchTerm = searchTerm.Split('+').ToList();
                 employees = employees
                     .Where(x =>
-                        x.First_Name.IndexOf(searchTerm) != -1
+                        x.First_Name.IndexOf(searchTerm) != -1 || x.Last_Name.IndexOf(searchTerm) != -1
                     ).ToList();
             }
+
+            //string searchTerm2 = Request.QueryString.Get("searchTerm2");
+
+            //if (!string.IsNullOrWhiteSpace(searchTerm2))
+            //{
+            //    List<string> andSearchTerm = searchTerm2.Split('+').ToList();
+            //    employees = employees
+            //        .Where(y =>
+            //            y.Last_Name.IndexOf(searchTerm2) != -1
+            //        ).ToList();
+            //}
 
             // creating list of departments
             List<Department> departments = context.Departments.OrderBy(x => x.Dept_Name).ToList();
@@ -116,5 +127,24 @@ namespace DBProgramming_Class_I.Controllers
                 return Json(false);
             }
         }
+
+        //[HttpPost]
+        //public JsonResult UpdateEmployee(Employee employee) 
+        //{
+        //    var context = new CompanyEntities();
+
+        //    try 
+        //    {
+        //        context.Employees.Add(employee);
+        //        context.SaveChanges();
+
+        //        return Json(true);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Json(false);
+        //    }
+
+        //}
     }
 }
